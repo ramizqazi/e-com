@@ -10,7 +10,7 @@ function Layout({ children }) {
   return (
     <Flex flex={1} flexDir="column" height="100%" pos="relative">
       <Header />
-      <Flex flex={1} flexFlow="column nowrap">
+      <Flex flex={1} bgColor="white" flexFlow="column nowrap">
         {children}
       </Flex>
     </Flex>

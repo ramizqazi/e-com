@@ -8,17 +8,23 @@ import {
   MenuItem,
   MenuButton,
   useMediaQuery,
-  InputGroup,
-  Input,
-  InputRightElement,
 } from '@chakra-ui/react';
 import { Menu as MenuIcon, Heart, ShoppingCart } from 'react-feather';
 
 import HeaderButton from './HeaderButton';
 import HeaderSearch from '../HeaderSearch';
 
-const HeaderButtons = () => {
+const HeaderButtons = ({ authenticated }) => {
   const [isSmallerThan766] = useMediaQuery('(max-width: 766px)');
+
+  if (authenticated) {
+    return (
+      <HStack>
+        <Button variant="outline">Login</Button>
+        <Button colorScheme="red">Register</Button>
+      </HStack>
+    );
+  }
 
   return (
     <Box>
