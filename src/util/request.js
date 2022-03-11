@@ -6,9 +6,9 @@ import { API_URL } from '../config/secrets';
  * Request Wrapper with default success/error actions
  */
 const request = async (options) => {
-  const token = window.localStorage.getItem('@foodstreet/token');
+  const token = window.localStorage.getItem('@e-com/token');
   const client = axios.create({
-    baseURL: 'http://localhost:4000/',
+    baseURL: API_URL,
     headers: {
       Authorization: `Bearer ${token}`,
     },

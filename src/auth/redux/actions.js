@@ -108,11 +108,11 @@ export const register = (data, cb) => async (dispatch) => {
 /**
  * LOGOUT
  */
-export const logout = () => async (dispatch) => {
+export const logout = (cb) => async (dispatch) => {
   try {
     dispatch({ type: constants.LOGOUT.REQUEST });
 
-    window.localStorage.removeItem('@foodstreet/token');
+    window.localStorage.removeItem('@e-com/token');
 
     dispatch({ type: constants.LOGOUT.SUCCESS });
   } catch (error) {

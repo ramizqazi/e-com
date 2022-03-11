@@ -1,6 +1,8 @@
 import React from 'react';
-import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { Formik, Field, Form } from 'formik';
 import {
   Text,
   Input,
@@ -13,11 +15,13 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react';
 
-import { NavLink } from 'react-router-dom';
 import Card from '../../common/Card';
 
-const LoginScreen = () => {
+import { login as loginAction } from '../redux/actions';
+
+const LoginScreen = ({ login }) => {
   const _handleSubmit = (values) => {
+    login(values.email, values.password);
   };
 
   return (
@@ -28,7 +32,7 @@ const LoginScreen = () => {
         validationSchema={LoginSchema}
         onSubmit={_handleSubmit}
       >
-        {() => (
+        {({ isSubmitting }) => (
           <Form>
             <Field name="email">
               {({ field, form }) => (
@@ -70,6 +74,7 @@ const LoginScreen = () => {
               mt={4}
               w="100%"
               type="submit"
+              isLoading={isSubmitting}
               color="white"
               bgColor="brand"
             >
@@ -96,4 +101,8 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required('Must not be empty'),
 });
 
-export default LoginScreen;
+const mapDispatchToProps = {
+  login: loginAction,
+};
+
+export default connect(null, mapDispatchToProps)(LoginScreen);

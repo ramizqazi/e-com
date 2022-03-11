@@ -7,11 +7,11 @@ import { getUser } from '../auth/redux/selectors';
 const UnAuthenticatedRoute = ({ unauthenticated, children, ...rest }) => (
   <Route
     {...rest}
-    render={({ location }) => (!unauthenticated ? (
+    render={({ location }) => (unauthenticated ? (
       children
     ) : (
       <Redirect
-        to={location.state || '/auth/login'}
+        to={location.state || '/'}
       />
     ))}
   />

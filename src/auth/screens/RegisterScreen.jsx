@@ -1,24 +1,36 @@
-import React from 'react';
-import { Formik, Field, Form } from 'formik';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { Formik, Field, Form } from 'formik';
 import {
   Text,
   Input,
   Button,
+  HStack,
   Center,
   Divider,
   FormLabel,
   FormControl,
   FormErrorIcon,
   FormErrorMessage,
-  HStack,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react';
 
-import { NavLink } from 'react-router-dom';
+import { Eye, EyeOff } from 'react-feather';
 import Card from '../../common/Card';
 
-const RegisterScreen = () => {
-  const _handleSubmit = (values) => {};
+import { register as registerAction } from '../redux/actions';
+
+const RegisterScreen = ({ register }) => {
+  const [passwordToggle, setPasswordToggle] = useState(true);
+
+  const _handleSubmit = (values) => {
+    register(values);
+  };
+
+  const _togglePassword = () => setPasswordToggle((prevState) => !prevState);
 
   return (
     <Card variant="rounded" w="350px" p={5}>
@@ -28,7 +40,7 @@ const RegisterScreen = () => {
         validationSchema={LoginSchema}
         onSubmit={_handleSubmit}
       >
-        {() => (
+        {({ isSubmitting }) => (
           <Form>
             <HStack align="flex-start">
               <Field name="firstName">
@@ -109,13 +121,19 @@ const RegisterScreen = () => {
               {({ field, form }) => (
                 <FormControl mt={3} isInvalid={form.errors.password && form.touched.password}>
                   <FormLabel>Password</FormLabel>
-                  <Input
-                    color="black"
-                    _hover="none !important"
-                    borderColor="gray"
-                    variant="outline"
-                    {...field}
-                  />
+                  <InputGroup>
+                    <Input
+                      color="black"
+                      type={passwordToggle ? 'password' : 'text'}
+                      _hover="none !important"
+                      borderColor="gray"
+                      variant="outline"
+                      {...field}
+                    />
+                    <InputRightElement onClick={_togglePassword}>
+                      {passwordToggle ? <EyeOff /> : <Eye /> }
+                    </InputRightElement>
+                  </InputGroup>
                   <FormErrorMessage>
                     <FormErrorIcon />
                     {form.errors.password}
@@ -127,6 +145,7 @@ const RegisterScreen = () => {
               mt={4}
               w="100%"
               type="submit"
+              isLoading={isSubmitting}
               color="white"
               bgColor="brand"
             >
@@ -159,4 +178,8 @@ const LoginSchema = Yup.object().shape({
   phone: Yup.number().required('Must not be empty'),
 });
 
-export default RegisterScreen;
+const mapDispatchToProps = {
+  register: registerAction,
+};
+
+export default connect(null, mapDispatchToProps)(RegisterScreen);
