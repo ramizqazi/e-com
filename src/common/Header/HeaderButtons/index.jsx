@@ -11,17 +11,18 @@ import {
 } from '@chakra-ui/react';
 import { Menu as MenuIcon, Heart, ShoppingCart } from 'react-feather';
 
+import { NavLink } from 'react-router-dom';
 import HeaderButton from './HeaderButton';
 import HeaderSearch from '../HeaderSearch';
 
 const HeaderButtons = ({ authenticated }) => {
   const [isSmallerThan766] = useMediaQuery('(max-width: 766px)');
 
-  if (authenticated) {
+  if (!authenticated) {
     return (
-      <HStack>
-        <Button variant="outline">Login</Button>
-        <Button colorScheme="red">Register</Button>
+      <HStack spacing={7}>
+        <Button as={NavLink} to="/auth/login" variant="link">Login</Button>
+        <Button as={NavLink} to="/auth/register" variant="link">Register</Button>
       </HStack>
     );
   }
