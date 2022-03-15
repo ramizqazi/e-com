@@ -21,33 +21,6 @@ export const getProduct = (state, { id, normalized }) => (
 );
 
 /**
- * Get choice group by id
- */
-// eslint-disable-next-line max-len
-export const getChoiceGroup = (state, { id, normalized }) => (
-  normalized
-    ? state.Entities.choiceGroups && state.Entities.choiceGroups[id]
-    : denormalize(id, schema.choiceGroup, state.Entities)
-);
-
-/**
- * Get choice by id
- */
-export const getChoice = (state, { id, normalized }) => (
-  normalized
-    ? state.Entities.choices && state.Entities.choices[id]
-    : denormalize(id, schema.choice, state.Entities)
-);
-
-/**
- * Get category by id
- */
-export const getCategory = (state, { id, normalized }) => (normalized
-  ? state.Entities.categories && state.Entities.categories[id]
-  : denormalize(id, schema.category, state.Entities)
-);
-
-/**
  * Get store by id
  */
 export const getStore = (state, { id, normalized }) => (

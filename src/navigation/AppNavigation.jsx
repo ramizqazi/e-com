@@ -8,7 +8,7 @@ import {
 import Layout from '../common/Layout';
 import HomeScreen from '../home/screens/HomeScreen';
 import AuthScreen from '../auth/screens/AuthScreen';
-import ProductScreen from '../product/screens/ProductScreen';
+import ProductScreen from '../products/screens/ProductScreen';
 import UnauthenticatedRoute from './UnauthenticatedRoute';
 
 /* =============================================================================
@@ -24,7 +24,7 @@ const AppNavigation = () => (
         <UnauthenticatedRoute path="/auth">
           <AuthScreen />
         </UnauthenticatedRoute>
-        <Route path="/product/:id" exact>
+        <Route path="/product/:id">
           <ProductScreen />
         </Route>
       </Switch>
