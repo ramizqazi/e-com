@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import ProductDetails from '../components/ProductDetails';
+import ProductsList from '../components/ProductsList';
 
 import { getProduct as getProductAction } from '../redux/actions';
 
@@ -37,6 +38,7 @@ const ProductScreen = ({ getProduct }) => {
         onMinus={_handleQtyMinus}
         onVariantChange={_handleVariantChange}
       />
+      <ProductsList selectedProduct={id} />
     </Box>
   );
 };

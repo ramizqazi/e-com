@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Heart, ShoppingCart } from 'react-feather';
 import { Link, NavLink } from 'react-router-dom';
 
-import { getProduct } from '../../entities/redux/selectors';
+import { getProduct } from '../entities/redux/selectors';
 
 const ProductCard = ({ id, product }) => {
   const photo = product?.photos[0];
@@ -19,7 +19,7 @@ const ProductCard = ({ id, product }) => {
   const store = product?.store?.name;
 
   return (
-    <Box p={5} border="1px" borderColor="gray.300" borderRadius={5}>
+    <Box minW="200px" p={5} border="1px" borderColor="gray.300" borderRadius={5}>
       <Link as={NavLink} to={`/product/${id}`}>
         <Image borderRadius={5} mb={2} width="100%" height="190px" src={photo} alt={name} />
       </Link>
@@ -27,10 +27,7 @@ const ProductCard = ({ id, product }) => {
         <Link as={NavLink} to={`/product/${id}`}>
           <Text color="black" fontWeight="bold">{store}</Text>
           <Text color="black" fontWeight="bold">{name}</Text>
-          <Text color="brand" fontWeight="bold">
-            $
-            {price}
-          </Text>
+          <Text color="brand" fontWeight="bold">{`Rs. ${price}`}</Text>
         </Link>
         <HStack justify="center" mt={5}>
           <Button variant="link" colorScheme="red">

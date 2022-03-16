@@ -34,18 +34,18 @@ const ProductDetails = ({
   }));
 
   return (
-    <Flex flexDir={['column', 'column', 'row']} align={['center', 'center', 'stretch']} mx={5}>
+    <Flex flexDir={['column', 'column', 'row']} align={['center', 'center', 'stretch']} px={5}>
       <ProductDetailsPhotos id={id} />
-      <VStack alignItems="flex-start" ml={5}>
+      <VStack alignItems="flex-start" ml={[0, 0, 5]}>
         <ProductDetailsInfo id={id} selectedVariant={selectedVariant} />
         <HStack>
           <Button color="black" onClick={onPlus}><Plus /></Button>
           <Text>{qty}</Text>
           <Button color="black" onClick={onMinus}><Minus /></Button>
         </HStack>
-        <HStack w="100%" justify="flex-end">
+        <HStack w="100%" flexDir={['column', 'column', 'row']} align="flex-start" justify="flex-end">
           {variants[0] && (
-            <>
+            <HStack w="100%">
               <Text>Sizes:</Text>
               <Select value={selectedVariant} onChange={onVariantChange}>
                 {variantOptions.map((option) => (
@@ -54,9 +54,9 @@ const ProductDetails = ({
                   </option>
                 ))}
               </Select>
-            </>
+            </HStack>
           )}
-          <HStack>
+          <HStack pt={[5, 5, 0]}>
             <Button color="black" leftIcon={<Heart color="red" />}>Add to Wish list</Button>
             <Button color="black" leftIcon={<ShoppingCart color="red" />}>Add to Cart</Button>
           </HStack>

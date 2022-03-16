@@ -4,12 +4,13 @@ import { Box, useMediaQuery } from '@chakra-ui/react';
 import FlatList from 'flatlist-react';
 
 import HomeHeader from '../components/HomeHeader';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../../common/ProductCard';
 
-import { getProducts as selectProducts, getNextCursor } from '../../products/redux/selectors';
-import { getProducts as getProductsAction, refreshProducts as refreshProductsAction } from '../../products/redux/actions';
+import { getProductsByCategory, getNextCursor, getCategory } from '../redux/selectors';
+import { getProducts as getProductsAction, refreshProducts as refreshProductsAction } from '../redux/actions';
 
 const HomeScreen = ({
+  category,
   products,
   nextCursor,
   getProducts,
@@ -18,12 +19,12 @@ const HomeScreen = ({
   const [isSmaller1280] = useMediaQuery('(max-width: 766px)');
 
   useEffect(() => {
-    refreshProducts();
+    refreshProducts(category);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [category]);
 
   const _handleLoadMoreItems = () => {
-    getProducts(nextCursor);
+    getProducts(category, nextCursor);
   };
 
   return (
@@ -45,10 +46,14 @@ const HomeScreen = ({
 
 const renderItem = (item) => <ProductCard key={item} id={item} />;
 
-const mapStateToProps = (state) => ({
-  products: selectProducts(state),
-  nextCursor: getNextCursor(state),
-});
+const mapStateToProps = (state) => {
+  const category = getCategory(state);
+  return {
+    category,
+    products: getProductsByCategory(state, { category }),
+    nextCursor: getNextCursor(state),
+  };
+};
 
 const mapDispatchToProps = {
   getProducts: getProductsAction,

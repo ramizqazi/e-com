@@ -17,7 +17,7 @@ const ProductDetailsInfo = ({ selectedVariant, product }) => {
       <Text color="black" fontWeight="semibold" fontSize="2xl">{store}</Text>
       <Text color="black" fontWeight="bold" fontSize="4xl">{name}</Text>
       <Text color="black" fontWeight="bold">{about}</Text>
-      <Text fontSize="2xl" fontWeight="bold" my={5} color="brand">{`$${price}`}</Text>
+      <Text fontSize="2xl" fontWeight="bold" my={5} color="brand">{`Rs. ${price}`}</Text>
     </Box>
   );
 };

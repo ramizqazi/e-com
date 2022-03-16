@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import {
   Tabs,
   Tab,
@@ -7,43 +7,55 @@ import {
   TabList,
 } from '@chakra-ui/react';
 
-// import { getType } from '../../redux/selectors';
-// import { setType as setTypeAction } from '../../redux/actions';
+import { getCategory } from '../redux/selectors';
+import { setCategory as setCategoryAction } from '../redux/actions';
 
 /* =============================================================================
 <HomeHeader />
 ============================================================================= */
-const HomeHeader = ({ type, setType }) => {
+const HomeHeader = ({ category, setCategory }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   // Set current active tab
   useEffect(() => {
-    switch (type) {
+    switch (category) {
       case 'all':
         setTabIndex(0);
         break;
-      case 'delivery':
+      case 'men':
         setTabIndex(1);
         break;
-      case 'take_away':
+      case 'women':
         setTabIndex(2);
+        break;
+      case 'electronics':
+        setTabIndex(3);
+        break;
+      case 'jewelry':
+        setTabIndex(4);
         break;
       default:
         break;
     }
-  }, [type]);
+  }, [category]);
 
   const _handleTabChange = (value) => {
     setTabIndex(value);
     switch (value) {
       case 0:
-        setType('all');
+        setCategory('all');
         break;
       case 1:
-        setType('delivery');
+        setCategory('men');
         break;
       case 2:
-        setType('take_away');
+        setCategory('women');
+        break;
+      case 3:
+        setCategory('electronics');
+        break;
+      case 4:
+        setCategory('jewelry');
         break;
       default:
         break;
@@ -73,20 +85,19 @@ const HomeHeader = ({ type, setType }) => {
   );
 };
 
-// const mapStateToProps = (state) => ({
-//   type: getType(state),
-// });
+const mapStateToProps = (state) => ({
+  category: getCategory(state),
+});
 
-// const mapDispatchToProps = {
-//   setType: setTypeAction,
-// };
+const mapDispatchToProps = {
+  setCategory: setCategoryAction,
+};
 
-// const propsAreEqual = (prevProps, nextProps) => prevProps.type === nextProps.type;
+const propsAreEqual = (prevProps, nextProps) => prevProps.type === nextProps.type;
 
 /* Export
 ============================================================================= */
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps,
-// )(React.memo(HomeHeader, propsAreEqual));
-export default HomeHeader;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(React.memo(HomeHeader, propsAreEqual));
