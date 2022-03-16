@@ -21,7 +21,7 @@ const ProductCard = ({ id, product }) => {
   return (
     <Box p={5} border="1px" borderColor="gray.300" borderRadius={5}>
       <Link as={NavLink} to={`/product/${id}`}>
-        <Image borderRadius={5} mb={2} width="100%" height="auto" src={photo} alt={name} />
+        <Image borderRadius={5} mb={2} width="100%" height="190px" src={photo} alt={name} />
       </Link>
       <Box textAlign="center">
         <Link as={NavLink} to={`/product/${id}`}>
