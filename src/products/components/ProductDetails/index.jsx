@@ -8,12 +8,11 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { connect } from 'react-redux';
-import {
-  Heart, Minus, Plus, ShoppingCart,
-} from 'react-feather';
+import { Minus, Plus } from 'react-feather';
 
 import ProductDetailsPhotos from './ProductDetailsPhotos';
 import ProductDetailsInfo from './ProductDetailsInfo';
+import ProductActions from '../../../common/ProductActions';
 
 import { getProduct } from '../../../entities/redux/selectors';
 
@@ -44,7 +43,7 @@ const ProductDetails = ({
           <Button color="black" onClick={onMinus}><Minus /></Button>
         </HStack>
         <HStack w="100%" flexDir={['column', 'column', 'row']} align="flex-start" justify="flex-end">
-          {variants[0] && (
+          {variants && (
             <HStack w="100%">
               <Text>Sizes:</Text>
               <Select value={selectedVariant} onChange={onVariantChange}>
@@ -57,8 +56,7 @@ const ProductDetails = ({
             </HStack>
           )}
           <HStack pt={[5, 5, 0]}>
-            <Button color="black" leftIcon={<Heart color="red" />}>Add to Wish list</Button>
-            <Button color="black" leftIcon={<ShoppingCart color="red" />}>Add to Cart</Button>
+            <ProductActions showDetail id={id} />
           </HStack>
         </HStack>
       </VStack>

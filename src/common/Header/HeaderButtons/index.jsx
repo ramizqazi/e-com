@@ -24,8 +24,9 @@ import HeaderSearch from '../HeaderSearch';
 import { getUser } from '../../../auth/redux/selectors';
 import { logout as logoutAction } from '../../../auth/redux/actions';
 
-const HeaderButtons = ({ authenticated, logout }) => {
+const HeaderButtons = ({ user, logout }) => {
   const history = useHistory();
+  const wishList = user?.wishList;
   const [isSmallerThan766] = useMediaQuery('(max-width: 766px)');
 
   const _handleLogout = async () => {
@@ -33,7 +34,7 @@ const HeaderButtons = ({ authenticated, logout }) => {
     history.push('/auth/login');
   };
 
-  if (!authenticated) {
+  if (!user) {
     return (
       <Box>
         <HStack display={['none', 'none', 'flex']} spacing={7}>
@@ -61,7 +62,7 @@ const HeaderButtons = ({ authenticated, logout }) => {
   return (
     <Box>
       <HStack display={['none', 'none', 'flex']} className="Icons-div" spacing={7}>
-        <HeaderButton title="Wish List" icon={<Heart color="white" />} count={2} />
+        <HeaderButton title="Wish List" icon={<Heart color="white" />} count={wishList.length} />
         <HeaderButton title="Your Cart" icon={<ShoppingCart color="white" />} count={2} />
         <Button rightIcon={<LogOut />} onClick={_handleLogout}>Logout </Button>
       </HStack>
@@ -71,7 +72,7 @@ const HeaderButtons = ({ authenticated, logout }) => {
           <MenuList p={3} mt={3}>
             <HeaderSearch />
             <MenuItem justifyContent="center" alignItems="center">
-              <HeaderButton title="Your Cart" icon={<ShoppingCart />} count={2} />
+              <HeaderButton title="Wish List" icon={<Heart />} count={wishList.length} />
             </MenuItem>
             <MenuItem justifyContent="center" alignItems="center">
               <HeaderButton title="Your Cart" icon={<ShoppingCart />} count={2} />
@@ -84,7 +85,7 @@ const HeaderButtons = ({ authenticated, logout }) => {
 };
 
 const mapStateToProps = (state) => ({
-  authenticated: Boolean(getUser(state)),
+  user: getUser(state),
 });
 
 const mapDispatchToProps = {

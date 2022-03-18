@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -13,13 +13,20 @@ import {
   FormControl,
   FormErrorIcon,
   FormErrorMessage,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react';
 
+import { Eye, EyeOff } from 'react-feather';
 import Card from '../../common/Card';
 
 import { login as loginAction } from '../redux/actions';
 
 const LoginScreen = ({ login }) => {
+  const [passwordToggle, setPasswordToggle] = useState(true);
+
+  const _togglePassword = () => setPasswordToggle((prevState) => !prevState);
+
   const _handleSubmit = (values) => {
     login(values.email, values.password);
   };
@@ -56,13 +63,19 @@ const LoginScreen = ({ login }) => {
               {({ field, form }) => (
                 <FormControl mt={3} isInvalid={form.errors.password && form.touched.password}>
                   <FormLabel>Password</FormLabel>
-                  <Input
-                    color="black"
-                    _hover="none !important"
-                    borderColor="gray"
-                    variant="outline"
-                    {...field}
-                  />
+                  <InputGroup>
+                    <Input
+                      color="black"
+                      type={passwordToggle ? 'password' : 'text'}
+                      _hover="none !important"
+                      borderColor="gray"
+                      variant="outline"
+                      {...field}
+                    />
+                    <InputRightElement onClick={_togglePassword}>
+                      {passwordToggle ? <EyeOff /> : <Eye /> }
+                    </InputRightElement>
+                  </InputGroup>
                   <FormErrorMessage>
                     <FormErrorIcon />
                     {form.errors.password}

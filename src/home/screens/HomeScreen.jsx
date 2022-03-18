@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Box, useMediaQuery } from '@chakra-ui/react';
+import { Box, Center, useMediaQuery } from '@chakra-ui/react';
 import FlatList from 'flatlist-react';
 
 import HomeHeader from '../components/HomeHeader';
@@ -37,7 +37,7 @@ const HomeScreen = ({
           renderItem={renderItem}
           loadMoreItems={_handleLoadMoreItems}
           minColumnWidth={isSmaller1280 ? '170px' : '200px'}
-          renderWhenEmpty={() => <div>List is empty!</div>}
+          renderWhenEmpty={() => <Center fontSize="2xl">No Items In The Category Please Checkout Later!</Center>}
         />
       </Box>
     </Box>

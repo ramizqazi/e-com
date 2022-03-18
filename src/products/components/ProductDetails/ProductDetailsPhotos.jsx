@@ -16,7 +16,7 @@ const ProductDetailsPhotos = ({ product }) => {
   const photos = product?.photos;
 
   const getConfigurableProps = () => ({
-    showArrows: true,
+    showArrows: false,
     showStatus: true,
     showIndicators: true,
     infiniteLoop: true,
@@ -38,14 +38,14 @@ const ProductDetailsPhotos = ({ product }) => {
   });
   const createCarouselItemImage = (_, index) => (
     <Box key={index}>
-      <Image src={photos[index]} alt="" />
+      <Image h="85px" src={photos[index]} alt="" />
     </Box>
   );
 
   return (
     <Carousel {...getConfigurableProps()} swipeable>
-      {photos.map((photo) => (
-        <Box key={photo} w={['auto', 'auto', '500px']} h={['auto', 'auto', '500px']}>
+      {photos?.map((photo) => (
+        <Box key={photo} w={['auto', 'auto', '500px']} h={['auto', 'auto', '450px']}>
           <Image alt="Test Image" src={photo} />
         </Box>
       ))}
