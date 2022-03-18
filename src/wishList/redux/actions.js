@@ -4,9 +4,10 @@ import request from '../../util/request';
 import * as constants from './constants';
 import { addEntities } from '../../entities/redux/actions';
 import { user as userSchema } from '../../entities/api/schema';
+import { getUser as selectUser } from '../../auth/redux/selectors';
 
 /**
- *.WISHLIST_ADD
+ * WISHLIST_ADD
  */
 export const addWishList = (id) => async (dispatch) => {
   try {
@@ -31,9 +32,9 @@ export const addWishList = (id) => async (dispatch) => {
 };
 
 /**
- *.WISHLIST_REMOVE
+ * WISHLIST_REMOVE
  */
-export const removeWishList = (id) => async (dispatch) => {
+export const removeWishList = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: constants.WISHLIST_REMOVE.REQUEST });
 
@@ -41,7 +42,14 @@ export const removeWishList = (id) => async (dispatch) => {
       url: `/user/${id}/remove_wishList`,
       method: 'POST',
     });
-    const { entities } = normalize(payload, userSchema);
+    const user = selectUser(getState());
+
+    const { entities } = normalize({
+      id: user.id,
+      wishList: user.wishList.filter((wish) => wish !== id),
+    }, userSchema);
+
+    dispatch(addEntities(entities));
 
     dispatch(addEntities(entities));
     dispatch({ type: constants.WISHLIST_REMOVE.SUCCESS });
