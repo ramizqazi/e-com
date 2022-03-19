@@ -75,6 +75,8 @@ const mapDispatchToProps = {
 // eslint-disable-next-line max-len
 const propsAreEqual = (prevProps, nextProps) => prevProps?.product?.name === nextProps?.product?.name
 && prevProps?.product?.price === nextProps?.product?.price
+&& prevProps?.product?.about === nextProps?.product?.about
+&& prevProps?.product?.photos?.toString() === nextProps?.product?.photos?.toString()
 && prevProps?.product?.store?.name === nextProps?.product?.store?.name;
 
 export default connect(

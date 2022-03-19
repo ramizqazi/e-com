@@ -8,7 +8,6 @@ import { product as productSchema } from '../../entities/api/schema';
 /**
  * PRODUCT_GET
  */
-// eslint-disable-next-line import/prefer-default-export
 export const getProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: constants.PRODUCT_GET.REQUEST });
@@ -17,13 +16,10 @@ export const getProduct = (id) => async (dispatch) => {
       url: `/products/${id}`,
       method: 'GET',
     });
-    const { entities, result } = normalize(payload, productSchema);
+    const { entities } = normalize(payload, productSchema);
 
     dispatch(addEntities(entities));
-    dispatch({
-      type: constants.PRODUCT_GET.SUCCESS,
-      payload: result,
-    });
+    dispatch({ type: constants.PRODUCT_GET.SUCCESS });
   } catch (error) {
     dispatch({
       type: constants.PRODUCT_GET.FAIL,
@@ -31,5 +27,36 @@ export const getProduct = (id) => async (dispatch) => {
     });
   } finally {
     dispatch({ type: constants.PRODUCT_GET.COMPLETE });
+  }
+};
+
+/**
+ * PRODUCT_FIND
+ */
+export const productFind = (searchTxt, cb) => async (dispatch) => {
+  try {
+    dispatch({ type: constants.PRODUCT_FIND.REQUEST });
+
+    const payload = await request({
+      url: `/products/find?q=${searchTxt}`,
+      method: 'GET',
+    });
+    const { entities, result } = normalize(payload.data, [productSchema]);
+
+    dispatch(addEntities(entities));
+    dispatch({ type: constants.PRODUCT_FIND.SUCCESS, payload: result });
+    if (typeof cb === 'function') {
+      cb(null, payload.data);
+    }
+  } catch (error) {
+    dispatch({
+      type: constants.PRODUCT_FIND.FAIL,
+      error,
+    });
+    if (typeof cb === 'function') {
+      cb(error, null);
+    }
+  } finally {
+    dispatch({ type: constants.PRODUCT_FIND.COMPLETE });
   }
 };

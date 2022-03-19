@@ -10,6 +10,7 @@ import HomeScreen from '../home/screens/HomeScreen';
 import AuthScreen from '../auth/screens/AuthScreen';
 import ProductScreen from '../products/screens/ProductScreen';
 import WishListScreen from '../wishList/screens/WishListScreen';
+import ProductSearchScreen from '../products/screens/ProductSearchScreen';
 import UnauthenticatedRoute from './UnauthenticatedRoute';
 import AuthenticatedRoute from './AuthenticatedRoute';
 
@@ -31,6 +32,9 @@ const AppNavigation = () => (
         </AuthenticatedRoute>
         <Route path="/product/:id">
           <ProductScreen />
+        </Route>
+        <Route path="/search">
+          <ProductSearchScreen />
         </Route>
       </Switch>
     </Layout>
