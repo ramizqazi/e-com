@@ -63,7 +63,14 @@ const HomeHeader = ({ category, setCategory }) => {
   };
 
   return (
-    <HStack mb={10} justify="space-between" boxShadow="0 5px 5px 0 rgba(0,0,0,0.2)">
+    <HStack
+      top={0}
+      zIndex={10}
+      bgColor="white"
+      position="sticky"
+      justify="space-between"
+      boxShadow="0 5px 5px 0 rgba(0,0,0,0.2)"
+    >
       <Tabs
         flex={1}
         maxW="1200px"

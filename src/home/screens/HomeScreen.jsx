@@ -5,6 +5,7 @@ import FlatList from 'flatlist-react';
 
 import HomeHeader from '../components/HomeHeader';
 import ProductCard from '../../common/ProductCard';
+import HomeDeals from '../components/HomeDeals';
 
 import { getProductsByCategory, getNextCursor, getCategory } from '../redux/selectors';
 import { getProducts as getProductsAction, refreshProducts as refreshProductsAction } from '../redux/actions';
@@ -30,6 +31,7 @@ const HomeScreen = ({
   return (
     <Box flex={1}>
       <HomeHeader />
+      <HomeDeals />
       <Box p={2} maxW="1200px" margin="0 auto">
         <FlatList
           list={products}
