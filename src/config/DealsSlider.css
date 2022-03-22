@@ -150,3 +150,14 @@
     font-size: 32px;
   }
 }
+
+.product-slider-wrapper {
+  height:'400px';
+  position: relative;
+  overflow: hidden;
+}
+
+.product-slide {
+  height: 60vh;
+  background-size: cover;
+}

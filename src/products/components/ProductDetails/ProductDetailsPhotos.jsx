@@ -1,55 +1,44 @@
-import React from 'react';
-import {
-  Box,
-  Image,
-  useMediaQuery,
-} from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { Box, HStack, Image } from '@chakra-ui/react';
 import { connect } from 'react-redux';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Slider from 'react-animated-slider';
+import 'react-animated-slider/build/horizontal.css';
 
 import { getProduct } from '../../../entities/redux/selectors';
 
 const ProductDetailsPhotos = ({ product }) => {
-  const [iSmallerThen766] = useMediaQuery('(max-width: 766px)');
+  const [slideIndex, setSlideIndex] = useState(0);
 
   const photos = product?.photos;
 
-  const getConfigurableProps = () => ({
-    showArrows: false,
-    showStatus: true,
-    showIndicators: true,
-    infiniteLoop: true,
-    width: iSmallerThen766 ? 'auto' : '500px',
-    showThumbs: true,
-    useKeyboardArrows: true,
-    autoPlay: true,
-    stopOnHover: true,
-    swipeable: true,
-    emulateTouch: true,
-    autoFocus: false,
-    thumbWidth: 80,
-    selectedItem: 0,
-    interval: 5000,
-    transitionTime: 500,
-    swipeScrollTolerance: 5,
-    ariaLabel: 'ariaLabel',
-    renderThumbs: (items) => items.map(createCarouselItemImage),
-  });
-  const createCarouselItemImage = (_, index) => (
-    <Box key={index}>
-      <Image h="85px" src={photos[index]} alt="" />
-    </Box>
-  );
-
   return (
-    <Carousel {...getConfigurableProps()} swipeable>
-      {photos?.map((photo) => (
-        <Box key={photo} w={['auto', 'auto', '500px']} h={['auto', 'auto', '450px']}>
-          <Image alt="Test Image" src={photo} />
-        </Box>
-      ))}
-    </Carousel>
+    <Box w="100%" p={0}>
+      <Slider slideIndex={0} onSlideChange={(e) => setSlideIndex(e.slideIndex)}>
+        {photos.map((photo) => (
+          <Box
+            key={photo}
+            bgPos="center"
+            bgSize="cover"
+            bgRepeat="no-repeat"
+          >
+            <Image w="100%" h="auto" src={photo} />
+          </Box>
+        ))}
+      </Slider>
+      <HStack spacing={5} my={5} justify="center">
+        {photos.map((p, i) => (
+          <Box
+            w="70px"
+            h="70px"
+            borderRadius="5px"
+            borderColor={slideIndex === i ? 'red.500' : 'gray.400'}
+            borderWidth={slideIndex === i ? '2px' : '1px'}
+          >
+            <Image w="100%" h="100%" src={p} />
+          </Box>
+        ))}
+      </HStack>
+    </Box>
   );
 };
 
